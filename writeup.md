@@ -46,14 +46,21 @@ FOllowing is the KR210 arm model to introduce DH parameters.
 
 | Links | alpha(i-1) | a(i-1) | d(i-1) | theta(i)   |
 | ----- | ---------- | ------ | ------ | ---------- |
-| 0->1  | 0          | 0      | d1     | q1         |
-| 1->2  | - pi/2     | a2     | 0      | -pi/2 + q2 |
-| 2->3  | 0          | a3     | 0      | q3         |
-| 3->4  | - pi/2     | a4     | d4     | q4         |
-| 4->5  | pi/2       | 0      | 0      | q5         |
-| 5->6  | - pi/2     | 0      | 0      | q6         |
-| 6->EE | 0          | 0      | d7     | 0          |
+| 0->1  | 0          | 0      | d0     | q0         |
+| 1->2  | - pi/2     | a1     | 0      | -pi/2 + q1 |
+| 2->3  | 0          | a2     | 0      | q2         |
+| 3->4  | - pi/2     | a3     | d3     | q3         |
+| 4->5  | pi/2       | 0      | 0      | q4         |
+| 5->6  | - pi/2     | 0      | 0      | q5         |
+| 6->EE | 0          | 0      | d6     | 0          |
 
+```
+        numofJoints = 7
+        Q = [Symbol('q' + str(i)) for i in range(numofJoints)]
+        D = [Symbol('d' + str(i)) for i in range(numofJoints)]
+        A = [Symbol('a' + str(i)) for i in range(numofJoints)]
+        ALPHA = [Symbol('alpha' + str(i)) for i in range(numofJoints)]
+```
 
 In this robot arm, Link 0 represents the base link, and
 Link 7 represents the EE link, which is fixed.
@@ -76,6 +83,17 @@ Finally the DH paramter table is
 | 4->5  |   pi/2     | 0       | 0      | q5         |
 | 5->6  | - pi/2     | 0       | 0      | q6         |
 | 6->EE |      0     | 0       | 0.303  | 0          |
+
+```
+        a12 = 0.4500 # meters
+        a23 = 0.3000 # meters
+
+    	# Create Modified DH parameters
+	    s = {alpha0: 0,  a0:   0, d1: 0,
+             alpha1: 0,  a1: a12, d2: 0,
+             alpha2: 0,  a2: a23,        q3: 0,
+             alpha3: 0,  a3:   0, d4: 0}
+```
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
 
